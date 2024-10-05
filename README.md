@@ -1,6 +1,5 @@
 # flux-sbc
 
-TmjS0fptWKftZpI
 React version of FluxSBC by Daniel Paixao
 -----------------------------------------------------------------------------
 			FLUXSBC INSTALLATION GUIDE
