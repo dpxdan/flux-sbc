@@ -20,22 +20,31 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 // ##############################################################################
-$fs_logger->log ( "*************************** Directory Starts ********************************" );
-$xml = "";
-$fs_logger->log ( $_REQUEST );
-if (isset ( $_REQUEST ['Event-Name'] ) && $_REQUEST ['Event-Name'] == 'CUSTOM' && $_REQUEST ['VM-Action'] == 'change-password') {
-	$fs_logger->log ( "*************************** VM password change ********************************" );
-	update_vm_data ( $fs_logger, $db, $_REQUEST ['VM-User-Password'], $_REQUEST ['VM-User'] );
+class fs_logger {
+	var $fp;
+	var $config;
+	function __construct($lib) {
+		$this->config = $lib->config;
+//HP: Remove static set value		$this->config ['debug'] = 0;
+		 //~ $this->config['log_path'] = "/backup/html/flux/";
+		if ($this->config ['debug'] == '0') {
+			// $this->fp = fopen($this->config['log_path'] . 'flux_' . date('Y-m-d') . '.txt', 'a+');
+			$this->fp = fopen ( $this->config ['log_path'] . 'flux_fs.log', 'a+' );
+			//$this->fp = fopen ( $this->config ['log_path'], 'a+' );
+		}
+	}
+	function log($log) {
+		if ($this->config ['debug'] == '0') {
+			if (is_array ( $log ))
+				fwrite ( $this->fp, "[" . date ( 'Y-m-d H:i:s' ) . "] " . print_r ( $log, TRUE ) );
+			else
+				fwrite ( $this->fp, "[" . date ( 'Y-m-d H:i:s' ) . "] " . $log . "\n" );
+		}
+	}
+	function close() {
+		if ($this->config ['debug'] == '0')
+			fclose ( $this->fp );
+	}
 }
 
-if (isset ( $_REQUEST ['user'] ) && isset ( $_REQUEST ['domain'] )) {
-	$xml = load_directory ( $fs_logger, $db );
-	if ($xml == "")
-		xml_not_found ();
-	echo $xml;
-} else {
-	xml_not_found ();
-}
-$fs_logger->log ( "*************************** Directory Ends **********************************" );
-exit ();
 ?>

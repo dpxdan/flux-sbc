@@ -1,10 +1,10 @@
 <?php
 // ##############################################################################
-// Flux Telecom - Unindo pessoas e negócios
+// Flux SBC - Unindo pessoas e negócios
 //
 // Copyright (C) 2022 Flux Telecom
 // Daniel Paixao <daniel@flux.net.br>
-// FluxSBC Version 4.2 and above
+// Flux SBC Version 4.0 and above
 // License https://www.gnu.org/licenses/agpl-3.0.html
 //
 // This program is free software: you can redistribute it and/or modify
@@ -20,20 +20,24 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 // ##############################################################################
-$logger->log ( "*************************** Configuration Starts ********************************" );
+$fs_logger->log ( "*************************** Configuration Starts ********************************" );
 
 $xml = "";
 if ($_REQUEST ['key_value'] == 'sofia.conf') {
-	$xml = load_sofia ( $logger, $db, $config );
+	$xml = load_sofia ( $fs_logger, $db, $config );
 	header ( 'Content-Type: text/xml' );
 	echo $xml;
 } elseif ($_REQUEST ['key_value'] == 'acl.conf') {
-	$xml = load_acl ( $logger, $db, $config );
+	$xml = load_acl ( $fs_logger, $db, $config );
+	header ( 'Content-Type: text/xml' );
+	echo $xml;
+} elseif ($_REQUEST ['key_value'] == 'translate.conf') {
+	$xml = load_translate ( $fs_logger, $db, $config );
 	header ( 'Content-Type: text/xml' );
 	echo $xml;
 } else {
 	xml_not_found ();
 }
-$logger->log ( "*************************** Configuration Ends **********************************" );
+$fs_logger->log ( "*************************** Configuration Ends **********************************" );
 exit ();
 ?>

@@ -1,10 +1,10 @@
 <?php
 // ##############################################################################
-// Flux Telecom - Unindo pessoas e negócios
+// Flux SBC - Unindo pessoas e negocios
 //
 // Copyright (C) 2022 Flux Telecom
 // Daniel Paixao <daniel@flux.net.br>
-// FluxSBC Version 4.2 and above
+// Flux SBC Version 3.0 and above
 // License https://www.gnu.org/licenses/agpl-3.0.html
 //
 // This program is free software: you can redistribute it and/or modify
@@ -44,6 +44,7 @@ if (defined ( 'ENVIRONMENT' )) {
 include ("lib/flux.xml.php");
 include ("lib/flux.db.php");
 include ("lib/flux.logger.php");
+include ("lib/flux.fs_logger.php");
 include ("lib/flux.lib.php");
 
 // Define db object
@@ -53,9 +54,10 @@ $db = new db ();
 $lib = new lib ();
 
 $config = $lib->get_configurations ( $db );
-// echo "<pre>";print_r($config);exit;
+//echo "<pre>";print_r($config);exit;
 // Define logger object
 $logger = new logger ( $lib );
+$fs_logger = new fs_logger ( $lib );
 // Define file name
 $file = "flux." . $_REQUEST ['section'] . ".php";
 
